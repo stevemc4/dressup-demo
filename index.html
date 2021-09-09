@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Dress Up Game</title>
+  <style>
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+    }
+
+    .bottoms {
+      height: 256px;
+    }
+
+    .bottom {
+      display: none;
+    }
+
+    .bottom.show {
+      display: block;
+    }
+
+    .buttons {
+      margin-top: 24px;
+    }
+
+  </style>
+</head>
+<body>
+  Test Dressup
+  <div class="game-container">
+    <div class="bottoms">
+      <img class="bottom show" src="/static/img/Pants.png" alt="Pants" data-index="0" />
+      <img class="bottom" src="/static/img/Shorts.png" alt="Shorts" data-index="1" />
+      <img class="bottom" src="/static/img/Skirt.png" alt="Skirt" data-index="2" />
+    </div>
+  </div>
+  <div class="buttons">
+    <button class="button prev">Prev</button>
+    <button class="button next">Next</button>
+  </div>
+  <script>
+    let currentSelection = 0
+    const bottoms = document.querySelectorAll('.bottom')
+    const prevButton = document.querySelector('.button.prev')
+    const nextButton = document.querySelector('.button.next')
+
+    function wrapUp() {
+      if (currentSelection < bottoms.length - 1)
+        currentSelection += 1
+      else
+        currentSelection = 0
+    }
+
+    function wrapDown() {
+      if (currentSelection > 0)
+        currentSelection -= 1
+      else
+        currentSelection = bottoms.length - 1
+    }
+
+    function updateBottoms() {
+      bottoms.forEach((bottom) => {
+        if (Number.parseInt(bottom.dataset.index) !== currentSelection) {
+          bottom.classList.remove('show')
+        } else {
+          bottom.classList.add('show')
+        }
+      })
+    }
+
+    nextButton.addEventListener('click', () => {
+      wrapUp()
+      updateBottoms()
+    })
+
+    prevButton.addEventListener('click', () => {
+      wrapDown()
+      updateBottoms()
+    })
+
+  </script>
+</body>
+</html>
